@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.R
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -21,6 +20,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import com.peter.zellerbankingapplication.R
+
 import com.peter.zellerbankingapplication.presentation.BaseApplication
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -118,7 +119,7 @@ class ManualEntryFragment : Fragment() {
                             Spacer(modifier = Modifier.height(40.dp))
                             Button(
                                 modifier = Modifier.fillMaxWidth(),
-                                onClick = {}// {findNavController().navigate(R.id.viewRecipe)}
+                                onClick = {findNavController().navigate(R.id.action_goto_TransactionViewFragment)}
                             ) {
                                 Text(text = "View Transactions")
                             }

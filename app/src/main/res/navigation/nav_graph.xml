@@ -12,17 +12,14 @@
         >
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_goto_TransactionViewFragment"
+            app:destination="@id/TransactionViewFragment" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.peter.zellerbankingapplication.presentation.ui.manual_entry.ManualEntryFragment"
-        android:label="@string/second_fragment_label"
+        android:id="@+id/TransactionViewFragment"
+        android:name="com.peter.zellerbankingapplication.presentation.ui.transaction_view.TransactionViewFragment"
+        android:label="Transaction View Fragment"
         >
 
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/ManualEntryFragment" />
     </fragment>
 </navigation>
