@@ -23,6 +23,7 @@ import androidx.navigation.findNavController
 import com.peter.zellerbankingapplication.R
 
 import com.peter.zellerbankingapplication.presentation.BaseApplication
+import com.peter.zellerbankingapplication.presentation.components.MyProgressBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
@@ -74,7 +75,12 @@ class ManualEntryFragment : Fragment() {
                                 horizontal = 24.dp,
                             )
                         ){
-                            Spacer(modifier = Modifier.height(40.dp))
+                            Spacer(modifier = Modifier.height(20.dp))
+                            MyProgressBar(
+                                isDisplayed = loading,
+                                verticalBias = 0.3f
+                            )
+                            Spacer(modifier = Modifier.height(20.dp))
                             Row(modifier = Modifier.fillMaxWidth()){
                                 TextField(
                                     modifier = Modifier
@@ -83,7 +89,6 @@ class ManualEntryFragment : Fragment() {
                                     value = amount,
                                     onValueChange =
                                     viewModel::onAmountChanged
-                                    //onQueryChanged(it)
                                     ,
                                     label = {
                                         Text(text = "Enter Amount")
@@ -107,13 +112,15 @@ class ManualEntryFragment : Fragment() {
                             Spacer(modifier = Modifier.height(40.dp))
                             Button(
                                 modifier = Modifier.fillMaxWidth(),
-                                onClick = { /*TODO*/ }) {
+                                onClick = {
+                                    viewModel.processDeposit() }) {
                                 Text(text = "Process Deposit")
                             }
                             Spacer(modifier = Modifier.height(40.dp))
                             Button(
                                 modifier = Modifier.fillMaxWidth(),
-                                onClick = { /*TODO*/ }) {
+                                onClick = {
+                                    viewModel.processWithdrawal() }) {
                                 Text(text = "Process Withdrawal")
                             }
                             Spacer(modifier = Modifier.height(40.dp))
@@ -123,6 +130,8 @@ class ManualEntryFragment : Fragment() {
                             ) {
                                 Text(text = "View Transactions")
                             }
+                            Spacer(modifier = Modifier.height(40.dp))
+
                         }
                     }
             }

@@ -34,7 +34,7 @@ constructor(
     private suspend fun getTransactions() {
         loading.value = true
 
-        delay(2000)
+        delay(1000)
 
         val result = transactionRepository.getTransactions(
         )

@@ -4,21 +4,42 @@ import com.peter.zellerbankingapplication.domain.model.BankTransaction
 
 class TransactionRepository_Mock : TransactionRepository {
 
-    private var transactions: List<BankTransaction> = listOf(
-        BankTransaction(1,10.0, "Deposit"),
-        BankTransaction(2,10.0, "Deposit"),
-        BankTransaction(3,10.0, "Deposit"),
-        BankTransaction(4,10.0, "Deposit"),
-        BankTransaction(5,10.0, "Deposit"),
-        BankTransaction(11,10.0, "Withdrawal"),
-        BankTransaction(12,10.0, "Withdrawal"),
-        BankTransaction(13,10.0, "Withdrawal"),
-        BankTransaction(14,10.0, "Withdrawal"),
-        BankTransaction(15,10.0, "Withdrawal"),
-    )
+    private var transactions = ArrayList<BankTransaction>()
 
+    init {
+        (1..10).forEach {
+            transactions.add(
+                BankTransaction(it.toLong(), it.toDouble()*2, "Deposit" )
+            )
+        }
+        (1..10).forEach {
+            transactions.add(
+                BankTransaction((it + 100).toLong(), it.toDouble(), "Withdrawal" )
+            )
+        }
+    }
 
     override suspend fun getTransactions(): List<BankTransaction> {
-        return transactions
+        return transactions.reversed()
+    }
+
+    override suspend fun processDeposit(amount: Double) {
+        transactions.add(
+            BankTransaction(
+                id = transactions.maxOf { it.id!! } + 1,
+                amount = amount,
+                transactionType = "Deposit"
+            )
+        )
+    }
+
+    override suspend fun processWithdrawal(amount: Double) {
+        transactions.add(
+            BankTransaction(
+                id = transactions.maxOf { it.id!! } + 1,
+                amount = amount,
+                transactionType = "Withdrawal"
+            )
+        )
     }
 }

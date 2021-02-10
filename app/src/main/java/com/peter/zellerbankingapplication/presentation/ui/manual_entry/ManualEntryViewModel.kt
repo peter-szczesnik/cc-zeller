@@ -8,6 +8,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.peter.zellerbankingapplication.repository.TransactionRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Named
@@ -16,9 +17,8 @@ import javax.inject.Named
 class ManualEntryViewModel
 @ViewModelInject
 constructor(
-    //private val repository: TransactionRepository,
+    private val transactionRepository: TransactionRepository
 ) : ViewModel() {
-
 
 
     val loading = mutableStateOf(false)
@@ -32,8 +32,36 @@ constructor(
         setAmount(query)
     }
 
-    private fun setAmount(amount: String){
+    private fun setAmount(amount: String) {
         this.amount.value = amount
+    }
+
+    fun processDeposit() {
+        viewModelScope.launch {
+            try {
+                loading.value = true
+                transactionRepository.processDeposit(amount.value.toDouble())
+                delay(1000)
+            } catch (ex: Exception) {
+            } finally {
+                loading.value = false
+                setAmount("")
+            }
+        }
+    }
+
+    fun processWithdrawal() {
+        viewModelScope.launch {
+            try {
+                loading.value = true
+                transactionRepository.processDeposit(amount.value.toDouble())
+                delay(1000)
+            } catch (ex: Exception) {
+            }finally {
+                loading.value = false
+                setAmount("")
+            }
+        }
     }
 }
 
