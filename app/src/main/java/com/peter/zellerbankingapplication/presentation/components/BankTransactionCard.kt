@@ -44,7 +44,7 @@ fun BankTransactionCard(
                 modifier = Modifier
                     .fillMaxWidth(0.2f)
                     .wrapContentWidth(Alignment.Start),
-                style = MaterialTheme.typography.h3
+                style = MaterialTheme.typography.h5
             )
             Text(
                 text = transaction.transactionType!!,

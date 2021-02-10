@@ -56,8 +56,8 @@ class ManualEntryFragment : Fragment() {
                     Scaffold(
                         topBar = {
                             Text(
-                                text = "Manual Input of Transactions",
-                                style = MaterialTheme.typography.h3,
+                                text = "Manual Input",
+                                style = MaterialTheme.typography.h4,
                                 color = MaterialTheme.colors.onSurface,
                                 modifier = Modifier.fillMaxWidth().wrapContentWidth(Alignment.CenterHorizontally)
                             )

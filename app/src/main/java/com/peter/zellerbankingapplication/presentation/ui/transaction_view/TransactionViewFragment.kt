@@ -17,6 +17,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.peter.zellerbankingapplication.presentation.BaseApplication
 import com.peter.zellerbankingapplication.presentation.components.BankTransactionList
+import com.peter.zellerbankingapplication.presentation.components.MyProgressBar
+
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
@@ -42,22 +44,16 @@ class TransactionViewFragment: Fragment() {
                 val loading = viewModel.loading.value
                 val transactions = viewModel.transactions.value
 
-                val scaffoldState = rememberScaffoldState()
-
                     Scaffold(
                         topBar = {
                             Text(
                                 text = "View Transactions",
-                                style = MaterialTheme.typography.h3,
+                                style = MaterialTheme.typography.h4,
                                 color = MaterialTheme.colors.onSurface,
                                 modifier = Modifier.fillMaxWidth()
                                     .wrapContentWidth(Alignment.CenterHorizontally)
                             )
 
-                        },
-                        scaffoldState = scaffoldState,
-                        snackbarHost = {
-                            scaffoldState.snackbarHostState
                         }
                     ) {
                         Box(
@@ -67,10 +63,10 @@ class TransactionViewFragment: Fragment() {
                                 loading = loading,
                                 transactions = transactions,
                             )
-                            /*CircularIndeterminateProgressBar(
+                            MyProgressBar(
                                 isDisplayed = loading,
                                 verticalBias = 0.3f
-                            )*/
+                            )
 
                         }
                     }
