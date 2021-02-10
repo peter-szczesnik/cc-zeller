@@ -8,11 +8,12 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.peter.zellerbankingapplication.domain.util.getAmount
+import com.peter.zellerbankingapplication.domain.util.isAmountValid
 import com.peter.zellerbankingapplication.repository.TransactionRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Named
-
 
 class ManualEntryViewModel
 @ViewModelInject
@@ -26,19 +27,13 @@ constructor(
     val loading = mutableStateOf(false)
     val amount = mutableStateOf("")
 
-    var amountDouble = 0.0
-
-    init {
-    }
-
-
-    fun onAmountChanged(query: String) {
-        setAmount(query)
+    fun onAmountChanged(amount: String) {
+        setAmount(amount)
     }
 
     private fun setAmount(amount: String) {
         isInsufficientFunds.value = false
-        if (validateAmount(amount)) {
+        if (isAmountValid(amount)) {
             isError.value = false
             this.amount.value = amount
         } else {
@@ -47,22 +42,11 @@ constructor(
         }
     }
 
-    private fun validateAmount(amount: String): Boolean {
-        if (amount == "") return true
-        try {
-            val amt = amount.toDouble()
-            amountDouble = amt
-            return amt != 0.0
-        } catch (ex: Exception) {
-            amountDouble = 0.0
-            return false
-        }
-    }
-
     fun processDeposit() {
+        if(amount.value == "") return
         viewModelScope.launch {
             loading.value = true
-            transactionRepository.processDeposit(amountDouble)
+            transactionRepository.processDeposit(getAmount(amount.value))
             delay(1000)
             loading.value = false
             setAmount("")
@@ -70,10 +54,11 @@ constructor(
     }
 
     fun processWithdrawal() {
+        if(amount.value == "") return
         viewModelScope.launch {
-            if (transactionRepository.getBalance() > amountDouble) {
+            if (transactionRepository.getBalance() > getAmount(amount.value)) {
                 loading.value = true
-                transactionRepository.processWithdrawal(amountDouble)
+                transactionRepository.processWithdrawal(getAmount(amount.value))
                 delay(1000)
                 loading.value = false
                 setAmount("")
