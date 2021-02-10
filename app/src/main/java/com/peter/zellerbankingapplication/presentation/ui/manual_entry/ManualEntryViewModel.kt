@@ -1,4 +1,4 @@
-package com.peter.zellerbankingapplication.presentation.ui.recipe_list
+package com.peter.zellerbankingapplication.presentation.ui.manual_entry
 
 import android.util.Log
 import androidx.compose.runtime.MutableState
@@ -12,12 +12,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Named
 
-const val PAGE_SIZE = 30
-
-const val STATE_KEY_PAGE = "recipe.state.page.key"
-const val STATE_KEY_QUERY = "recipe.state.query.key"
-const val STATE_KEY_LIST_POSITION = "recipe.state.query.list_position"
-const val STATE_KEY_SELECTED_CATEGORY = "recipe.state.query.selected_category"
 
 class ManualEntryViewModel
 @ViewModelInject
