@@ -29,9 +29,13 @@ Example
 
 What we’re looking for
 – Simple and concise code - yes
+
 – A reasonable but scalable architecture - yes
+
 – Proper modelling of the domain - very, very simple model
+
 – A sound testing strategy 
   - rudimentary unit testing of business logic has been implemented
   - it is recommended to add unit testing of view models, mocking retrofit api service (after such service has been implemented)
+  
 – A README that will help other developers - yes
