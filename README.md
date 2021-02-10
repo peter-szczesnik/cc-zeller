@@ -10,7 +10,7 @@ Testing strategy
   
 Limitations and recommended extensions
   - clean architecture has not been implemented
-  - retrfit service has not been implemented
+  - retrofit service has not been implemented
   - api repository has not been implemented
   - unit testing of view models has not been implemented
   - espresso testing has not been implemented
