@@ -21,8 +21,12 @@ constructor(
 ) : ViewModel() {
 
 
+    val isError = mutableStateOf(false)
+    val isInsufficientFunds = mutableStateOf(false)
     val loading = mutableStateOf(false)
     val amount = mutableStateOf("")
+
+    var amountDouble = 0.0
 
     init {
     }
@@ -33,36 +37,52 @@ constructor(
     }
 
     private fun setAmount(amount: String) {
-        this.amount.value = amount
+        isInsufficientFunds.value = false
+        if (validateAmount(amount)) {
+            isError.value = false
+            this.amount.value = amount
+        } else {
+            isError.value = true
+            this.amount.value = ""
+        }
+    }
+
+    private fun validateAmount(amount: String): Boolean {
+        if (amount == "") return true
+        try {
+            val amt = amount.toDouble()
+            amountDouble = amt
+            return amt != 0.0
+        } catch (ex: Exception) {
+            amountDouble = 0.0
+            return false
+        }
     }
 
     fun processDeposit() {
         viewModelScope.launch {
-            try {
-                loading.value = true
-                transactionRepository.processDeposit(amount.value.toDouble())
-                delay(1000)
-            } catch (ex: Exception) {
-            } finally {
-                loading.value = false
-                setAmount("")
-            }
+            loading.value = true
+            transactionRepository.processDeposit(amountDouble)
+            delay(1000)
+            loading.value = false
+            setAmount("")
         }
     }
 
     fun processWithdrawal() {
         viewModelScope.launch {
-            try {
+            if (transactionRepository.getBalance() > amountDouble) {
                 loading.value = true
-                transactionRepository.processDeposit(amount.value.toDouble())
+                transactionRepository.processWithdrawal(amountDouble)
                 delay(1000)
-            } catch (ex: Exception) {
-            }finally {
                 loading.value = false
                 setAmount("")
+            } else {
+                isInsufficientFunds.value = true
             }
         }
     }
+
 }
 
 

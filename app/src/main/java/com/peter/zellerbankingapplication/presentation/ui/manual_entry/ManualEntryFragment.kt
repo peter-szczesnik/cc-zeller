@@ -51,6 +51,8 @@ class ManualEntryFragment : Fragment() {
                 val amount = viewModel.amount.value
 
                 val loading = viewModel.loading.value
+                val isError = viewModel.isError.value
+                val isInsufficientFunds = viewModel.isInsufficientFunds.value
 
                 val scaffoldState = rememberScaffoldState()
 
@@ -120,7 +122,10 @@ class ManualEntryFragment : Fragment() {
                             Button(
                                 modifier = Modifier.fillMaxWidth(),
                                 onClick = {
-                                    viewModel.processWithdrawal() }) {
+                                    if(amount != "") {
+                                        viewModel.processWithdrawal()
+                                    }
+                                }) {
                                 Text(text = "Process Withdrawal")
                             }
                             Spacer(modifier = Modifier.height(40.dp))
@@ -130,8 +135,17 @@ class ManualEntryFragment : Fragment() {
                             ) {
                                 Text(text = "View Transactions")
                             }
-                            Spacer(modifier = Modifier.height(40.dp))
-
+                            Spacer(modifier = Modifier.height(30.dp))
+                            if(isError) {
+                                Snackbar(
+                                    text = { Text(text = "Amount error!") }
+                                )
+                            }
+                            if(isInsufficientFunds) {
+                                Snackbar(
+                                    text = { Text(text = "Insufficient Funds!") }
+                                )
+                            }
                         }
                     }
             }

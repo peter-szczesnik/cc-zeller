@@ -7,5 +7,6 @@ interface TransactionRepository {
     suspend fun getTransactions() : List<BankTransaction>
     suspend fun processDeposit(amount: Double)
     suspend fun processWithdrawal(amount: Double)
+    suspend fun getBalance() : Double
 
 }

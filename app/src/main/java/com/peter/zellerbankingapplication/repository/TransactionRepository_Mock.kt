@@ -42,4 +42,13 @@ class TransactionRepository_Mock : TransactionRepository {
             )
         )
     }
+
+    override suspend fun getBalance(): Double {
+        var balance = 0.0
+        transactions.forEach {
+            if(it.transactionType == "Deposit") balance += it.amount!!
+            else balance -= it.amount!!
+        }
+        return balance
+    }
 }
